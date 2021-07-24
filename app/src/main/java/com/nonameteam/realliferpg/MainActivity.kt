@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationBar.setOnItemSelectedListener {
-
-
             underlineSelectedItem(it.itemId)
 
             val selectedFragment: Fragment?

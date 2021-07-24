@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,63 +11,58 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/main_margin"
         android:layout_marginTop="@dimen/main_margin"
-        android:text="@string/tasks"
         android:textColor="@color/black"
         android:textSize="@dimen/header_middle"
+        android:text="@string/add_new_task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_margin"
-        android:layout_marginTop="@dimen/main_margin"
-        android:layout_marginEnd="@dimen/main_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskProjectChipGroup">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/task_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_new_task"
+        android:id="@+id/add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/main_margin"
         android:clickable="true"
-        android:contentDescription="@string/add_new_task"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_outline_save_24"
         android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_outline_add_24" />
+        android:contentDescription="@string/add_new_task" />
 
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/taskProjectChipGroup"
+    <EditText
+        android:id="@+id/task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/main_margin"
         android:layout_marginTop="@dimen/main_margin"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/task_adding_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskHeader">
+        app:layout_constraintTop_toBottomOf="@+id/taskHeader" />
 
-    </com.google.android.material.chip.ChipGroup>
-
-    <TextView
-        android:id="@+id/recyclerEmpty"
+    <EditText
+        android:id="@+id/task_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_tasks_at_this_moment"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginTop="@dimen/main_margin"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/task_adding_desc"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/task_name" />
+
+    <TextView
+        android:id="@+id/imlazy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginTop="@dimen/main_margin"
+        android:text="@string/imlazytext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task_description" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

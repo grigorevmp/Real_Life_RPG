@@ -56,4 +56,7 @@ dependencies {
     implementation 'org.mapsforge:vtm-android:0.16.0:natives-x86_64'
     implementation 'com.caverock:androidsvg:1.4'
 
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+
 }

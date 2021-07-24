@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Real Life RPG</string>
+    <string name="tasks">Tasks</string>
+    <string name="add_new_task">Add new task</string>
+    <string name="no_tasks_at_this_moment">No tasks at this moment</string>
+    <string name="imlazytext">Дальше - больше, но мне пока лень</string>
+    <string name="task_adding_name">Task name</string>
+    <string name="task_adding_desc">Task description</string>
 </resources>
