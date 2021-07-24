@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cardBackground"> #F1F1F1 </color>
+    <color name="statusColor">#F1F1F1 </color>
     <color name="underline"> #020202 </color>
     <color name="grey">#707070</color>
     <color name="button_grey">#4dC4C4C4</color>

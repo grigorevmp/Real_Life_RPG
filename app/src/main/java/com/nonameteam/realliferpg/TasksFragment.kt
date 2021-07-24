@@ -133,17 +133,17 @@ class TasksFragment: Fragment() {
     private fun spawnChipGroup(view: View) {
         val chip = Chip(view.context)
         chip.text = "Test1"
-        chip.setChipBackgroundColorResource(R.color.black)
+        //chip.setChipBackgroundColorResource(R.color.black)
         chip.isCloseIconVisible = true
-        chip.setTextColor(resources.getColor(R.color.white))
+        //chip.setTextColor(resources.getColor(R.color.white))
         chip.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
 
         val chip2 = Chip(view.context)
         chip2.text = "Test2" //chip2
 
-        chip2.setChipBackgroundColorResource(R.color.black)
+       // chip2.setChipBackgroundColorResource(R.color.black)
         chip2.isCloseIconVisible = true
-        chip2.setTextColor(resources.getColor(R.color.white))
+        //chip2.setTextColor(resources.getColor(R.color.white))
         chip2.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
 
 

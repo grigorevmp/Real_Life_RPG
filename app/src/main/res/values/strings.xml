@@ -6,4 +6,11 @@
     <string name="imlazytext">Дальше - больше, но мне пока лень</string>
     <string name="task_adding_name">Task name</string>
     <string name="task_adding_desc">Task description</string>
+    <string name="task_name">Task name</string>
+    <string name="task_description">Task description</string>
+    <string name="project">Project</string>
+    <string name="tags">Tags</string>
+    <string name="skills">Skills</string>
+    <string name="set_date">Set date</string>
+    <string name="notify">Notify</string>
 </resources>

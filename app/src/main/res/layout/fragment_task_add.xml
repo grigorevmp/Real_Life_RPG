@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true">
 
     <TextView
         android:id="@+id/taskHeader"
@@ -17,52 +19,302 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/new_task_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginEnd="@dimen/main_margin"
+        android:layout_marginTop="@dimen/main_margin"
+        android:layout_marginBottom="@dimen/main_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskHeader"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_name_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/task_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_description_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_description"
+                    android:layout_width="match_parent"
+                    android:inputType="textMultiLine"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/task_description" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/priorityChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                android:layout_marginTop="@dimen/small_margin"
+                app:singleSelection="true">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/priorityChip1"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="!"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/priorityChip2"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="!!"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/priorityChip3"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="!!!"/>
+
+            </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_project_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/project" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_tags_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_tags_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tags" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_skills_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_skills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/skills" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/setDate"
+                android:layout_marginTop="@dimen/small_margin"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_date"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/notify"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/setDayRepeat"
+                android:layout_marginTop="@dimen/small_margin"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repeat"/>
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/dayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                android:layout_marginTop="@dimen/small_margin"
+                app:singleLine="true"
+                app:singleSelection="true">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip1"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Mon"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip2"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Tue"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip3"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Wed"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip4"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Thu"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip5"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Fri"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip6"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Sat"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dayChip7"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Sun"/>
+
+            </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_repeat_num_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                app:boxCornerRadiusBottomEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusBottomStart="@dimen/small_border_radius"
+                app:boxCornerRadiusTopEnd="@dimen/small_border_radius"
+                app:boxCornerRadiusTopStart="@dimen/small_border_radius"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_repeat_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Reapeat time" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/main_margin"
+        android:layout_marginEnd="@dimen/main_margin"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_outline_save_24"
         android:focusable="true"
         android:contentDescription="@string/add_new_task" />
-
-    <EditText
-        android:id="@+id/task_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_margin"
-        android:layout_marginTop="@dimen/main_margin"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/task_adding_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskHeader" />
-
-    <EditText
-        android:id="@+id/task_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_margin"
-        android:layout_marginTop="@dimen/main_margin"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/task_adding_desc"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_name" />
-
-    <TextView
-        android:id="@+id/imlazy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_margin"
-        android:layout_marginTop="@dimen/main_margin"
-        android:text="@string/imlazytext"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
