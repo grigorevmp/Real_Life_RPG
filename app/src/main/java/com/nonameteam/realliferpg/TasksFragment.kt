@@ -3,7 +3,6 @@ package com.nonameteam.realliferpg
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +21,13 @@ import com.nonameteam.realliferpg.data.TaskData
 import com.nonameteam.realliferpg.helpers.TaskDbHelper
 import com.nonameteam.realliferpg.tasks.TaskCallback
 import kotlinx.coroutines.*
-import kotlin.random.Random
 
 
 class TasksFragment: Fragment() {
     private var taskData: MutableList<TaskData> = ArrayList()
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: TasksAdapter
+    private lateinit var chipGroup: ChipGroup
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +36,7 @@ class TasksFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
 
-        spawnChipGroup(view)
+        chipGroup = view.findViewById(R.id.taskProjectChipGroup)
 
         val gd = GridLayoutManager(view.context, 1)
         recycler = view.findViewById(R.id.task_recycler_view)
@@ -45,6 +44,7 @@ class TasksFragment: Fragment() {
 
         if (savedInstanceState == null) {
             initDataSource(view)
+            initTags(view)
         }
 
 
@@ -143,29 +143,46 @@ class TasksFragment: Fragment() {
 
 
     }
+    private fun initTags(view: View){
+        val dbHelper = TaskDbHelper(view.context)
+        val database: SQLiteDatabase = dbHelper.writableDatabase
+        val allTaskTags: MutableList<String> = ArrayList()
 
-    // TODO Generate chips by database query
-    private fun spawnChipGroup(view: View) {
-        val chip = Chip(view.context)
-        chip.text = "Test1"
-        //chip.setChipBackgroundColorResource(R.color.black)
-        chip.isCloseIconVisible = true
-        //chip.setTextColor(resources.getColor(R.color.white))
-        chip.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
+        val cursor: Cursor =
+            database.query(TaskDbHelper.TABLE_NAME, null, null, null, null, null, null)
 
-        val chip2 = Chip(view.context)
-        chip2.text = "Test2" //chip2
+        if (cursor.moveToFirst()) {
+            val tagsIndex: Int = cursor.getColumnIndex(TaskDbHelper.TAGS)
+            do {
+                val taskTags = cursor.getString(tagsIndex)
+                val tags = taskTags.split(' ')
+                tags.forEach {
+                    if (it !in allTaskTags){
+                        allTaskTags.add(it)
+                    }
+                }
 
-       // chip2.setChipBackgroundColorResource(R.color.black)
-        chip2.isCloseIconVisible = true
-        //chip2.setTextColor(resources.getColor(R.color.white))
-        chip2.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
 
+        spawnChipGroup(allTaskTags, view)
 
-        val chipGroup: ChipGroup = view.findViewById(R.id.taskProjectChipGroup)
+    }
 
-        chipGroup.addView(chip)
-        chipGroup.addView(chip2)
+    private fun spawnChipGroup(tags: MutableList<String>, view: View) {
+        tags.forEach {
+            if(it != "" && it != " ") {
+                val chip = Chip(view.context)
+                chip.text = it
+                chip.minWidth = 100
+                chip.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                chip.isCloseIconVisible = false
+                chip.isCheckable = true
+                chip.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
+                chipGroup.addView(chip)
+            }
+        }
     }
 
 

@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/main_margin"
         android:layout_marginTop="@dimen/main_margin"
+        app:singleSelection="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskHeader">
 

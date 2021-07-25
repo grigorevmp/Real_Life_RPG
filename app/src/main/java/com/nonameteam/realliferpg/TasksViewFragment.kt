@@ -3,12 +3,14 @@ package com.nonameteam.realliferpg
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nonameteam.realliferpg.data.TaskData
 import com.nonameteam.realliferpg.helpers.TaskDbHelper
@@ -16,6 +18,7 @@ import com.nonameteam.realliferpg.helpers.TaskDbHelper
 class TasksViewFragment: Fragment() {
     private lateinit  var taskName: TextView
     private lateinit var tasksDescription: TextView
+    private lateinit var chipGroup: ChipGroup
     private lateinit var dbHelper: TaskDbHelper
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +33,24 @@ class TasksViewFragment: Fragment() {
 
         val task = getDataInfo(taskID)
 
+        setTaskData(view, task)
+
+
+
+        val deleteTaskButton = view.findViewById<FloatingActionButton>(R.id.delete_task)
+
+        deleteTaskButton.setOnClickListener { deleteTask(taskID)}
+
+        return view
+    }
+
+    private fun setTaskData(view: View, task: TaskData?) {
         taskName = view.findViewById(R.id.task_name)
         tasksDescription = view.findViewById(R.id.task_description)
+        chipGroup = view.findViewById(R.id.taskProjectChipGroup)
 
         taskName.text = task!!.task_name
+
         if(task.task_description != null) {
             if (task.task_description != "") {
                 tasksDescription.text = task.task_description
@@ -46,11 +63,14 @@ class TasksViewFragment: Fragment() {
             tasksDescription.visibility = View.GONE
         }
 
-        val deleteTaskButton = view.findViewById<FloatingActionButton>(R.id.delete_task)
-
-        deleteTaskButton.setOnClickListener { deleteTask(taskID)}
-
-        return view
+        if(task.tags != null){
+            if(task.tags != ""){
+                spawnChipGroup(view, task.tags)
+            }
+            else{
+                chipGroup.visibility = View.GONE
+            }
+        }
     }
 
     private fun deleteTask(taskID: Int?) {
@@ -78,15 +98,18 @@ class TasksViewFragment: Fragment() {
             val idIndex: Int = cursor.getColumnIndex(TaskDbHelper.TASK_ID)
             val nameIndex: Int = cursor.getColumnIndex(TaskDbHelper.TASK_NAME)
             val descIndex: Int = cursor.getColumnIndex(TaskDbHelper.DESCRIPTION)
+            val tagsIndex: Int = cursor.getColumnIndex(TaskDbHelper.TAGS)
             do {
                 val taskId = cursor.getInt(idIndex)
                 val taskName = cursor.getString(nameIndex)
                 val taskDesc = cursor.getString(descIndex)
+                val tagsDesc = cursor.getString(tagsIndex)
                 taskData = (
                     TaskData(
                         task_id = taskId,
                         task_name = taskName,
-                        task_description = taskDesc
+                        task_description = taskDesc,
+                        tags = tagsDesc,
                     )
                 )
             } while (cursor.moveToNext())
@@ -97,6 +120,21 @@ class TasksViewFragment: Fragment() {
         return taskData
     }
 
+    private fun spawnChipGroup(view: View, str: String) {
+        val tags = str.split(' ')
+
+        tags.forEach {
+            if(it != "" && it != " ") {
+                val chip = Chip(view.context)
+                chip.text = it
+                chip.minWidth = 100
+                chip.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                chip.isCloseIconVisible = false
+                chip.setTextAppearance(R.style.TextAppearance_MaterialComponents_Chip)
+                chipGroup.addView(chip)
+            }
+        }
+    }
 
     companion object {
         fun newInstance(task_id: Int): TasksViewFragment {

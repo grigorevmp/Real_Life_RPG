@@ -161,7 +161,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textHeader">
 
                 <AutoCompleteTextView
-                    android:hint="Tags"
+                    android:hint="@string/add_tag_plus"
                     android:id="@+id/task_tags_project"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

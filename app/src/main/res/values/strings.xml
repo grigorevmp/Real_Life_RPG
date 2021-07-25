@@ -13,4 +13,5 @@
     <string name="skills">Skills</string>
     <string name="set_date">Set date</string>
     <string name="notify">Notify</string>
+    <string name="add_tag_plus">+ tag</string>
 </resources>

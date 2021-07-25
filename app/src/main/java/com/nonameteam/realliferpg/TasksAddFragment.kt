@@ -1,7 +1,6 @@
 package com.nonameteam.realliferpg
 
 import android.content.ContentValues
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.nonameteam.realliferpg.helpers.TaskDbHelper
 
 class TasksAddFragment: Fragment() {
+
     private var taskName: EditText? = null
     private var tasksDescription: EditText? = null
     private var tasksProject: EditText? = null
@@ -55,17 +55,7 @@ class TasksAddFragment: Fragment() {
             allTags)
         tasksTags?.setAdapter(adapter)
 
-
-        val tags = listOf("Test1")
-
-        for (name in tags) {
-            tagsChipGroup!!.addChip(name) {
-            }
-        }
-
         tasksTags!!.setOnAddTagListener {
-            //val _tags = tagsChipGroup!!.getAllChips().map { it.text.toString() }
-
             tasksTags!!.text = null
         }
 
@@ -84,7 +74,7 @@ class TasksAddFragment: Fragment() {
             val taskNameForDB = taskName!!.text.toString()
             val taskDescForDB = tasksDescription!!.text.toString()
             val taskProjectForDB = tasksProject!!.text.toString()
-            val taskTagsForDB = tasksTags!!.text.toString()
+            //val taskTagsForDB = tasksTags!!.text.toString()
             val taskSkillsForDB = tasksSkills!!.text.toString()
             val repeatTime = tasksRepeat!!.text.toString()
 
@@ -111,16 +101,21 @@ class TasksAddFragment: Fragment() {
                 }
             }
 
+            var taskTagsForDB = ""
+            tagsChipGroup?.getAllChips()?.forEach {
+                taskTagsForDB += "$it "
+            }
+
             contentValues.put(TaskDbHelper.TASK_NAME, taskNameForDB)
-            if(taskDescForDB != "")
+            if (taskDescForDB != "")
                 contentValues.put(TaskDbHelper.DESCRIPTION, taskDescForDB)
-            if(taskProjectForDB != "")
+            if (taskProjectForDB != "")
                 contentValues.put(TaskDbHelper.PROJECT, taskProjectForDB)
-            if(taskTagsForDB != "")
+            if (taskTagsForDB != "")
                 contentValues.put(TaskDbHelper.TAGS, taskTagsForDB)
-            if(taskSkillsForDB != "")
+            if (taskSkillsForDB != "")
                 contentValues.put(TaskDbHelper.SKILL, taskSkillsForDB)
-            if(repeatTime != "")
+            if (repeatTime != "")
                 contentValues.put(TaskDbHelper.REPEAT_COUNT, repeatTime)
             contentValues.put(TaskDbHelper.COMPLETE, false)
             contentValues.put(TaskDbHelper.PRIORITY, priority)
@@ -183,9 +178,17 @@ class TasksAddFragment: Fragment() {
     }
 
 
-    private fun FlexboxLayout.getAllChips(): List<Chip> {
-        return (0 until childCount).mapNotNull { index ->
-            getChildAt(index) as? Chip
+    private fun FlexboxLayout.getAllChips(): List<String> {
+
+        val allTaskTags: MutableList<String> = ArrayList()
+
+        val chipViews = (0 until childCount).mapNotNull { index ->
+            val view = getChildAt(index)
+            if (view is Chip) view else null
+        }
+        chipViews.forEach { allTaskTags.add(it.text.toString()) }
+
+        return allTaskTags
         }
     }
 
@@ -212,4 +215,3 @@ class TasksAddFragment: Fragment() {
         }
     }
 
-}
