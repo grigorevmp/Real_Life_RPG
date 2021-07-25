@@ -4,11 +4,13 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nonameteam.realliferpg.data.TaskData
 import com.nonameteam.realliferpg.helpers.TaskDbHelper
 import com.nonameteam.realliferpg.tasks.TaskCallback
+import kotlinx.coroutines.*
+import kotlin.random.Random
 
 
 class TasksFragment: Fragment() {
@@ -80,11 +84,22 @@ class TasksFragment: Fragment() {
         }
 
         val swipeContainer = view.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
+
+        val handler = CoroutineExceptionHandler { _, exception ->
+            Log.d("Coroutines error", "handled $exception")
+            lifecycleScope.cancel()
+            swipeContainer.isRefreshing = false
+        }
+
+
         swipeContainer.setOnRefreshListener {
-            Handler().postDelayed({
-                onTaskChanged(taskData)
-                swipeContainer.isRefreshing = false
-            }, 2000)
+            runBlocking {
+                val job = lifecycleScope.launch(handler + Job()) {
+                    //delay(2000)
+                    onTaskChanged(taskData)
+                    swipeContainer.isRefreshing = false
+                }
+            }
         }
 
         return view
